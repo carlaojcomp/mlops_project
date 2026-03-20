@@ -98,7 +98,7 @@ stages:
       size: 139
     - path: models/model.keras
       hash: md5
-      md5: a973ce4b5b1fc340787504fb5fee656e
+      md5: 15e69123488418ff820bd4d4dd9af273
       size: 79417
   evaluate:
     cmd: python -m src.model_evaluation.evaluate_model
@@ -113,7 +113,7 @@ stages:
       size: 101724
     - path: models/model.keras
       hash: md5
-      md5: a973ce4b5b1fc340787504fb5fee656e
+      md5: 15e69123488418ff820bd4d4dd9af273
       size: 79417
     - path: src/model_evaluation/evaluate_model.py
       hash: md5
