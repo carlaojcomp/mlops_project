@@ -61,22 +61,17 @@ def evaluate_model(
         X (pd.DataFrame): Test features.
         y_true (pd.Series): True labels.
     """
+    # Set up MLflow experiment
     mlflow.set_experiment("ml_classification")
 
-    experiment_id = os.getenv("MLFLOW_EXPERIMENT_ID")
-
-    if experiment_id is None:
-        raise ValueError("MLFLOW_EXPERIMENT_ID não está definido")
-
+    # Get run_id for latest MLflow run
     runs = mlflow.search_runs(
-    experiment_ids=[experiment_id],
-    order_by=["start_time DESC"]
+        experiment_ids=[os.getenv("MLFLOW_EXPERIMENT_ID")], order_by=["start_time DESC"]
     )
 
-    run_id = runs.iloc[0].run_id 
+    run_id = runs.iloc[0].run_id
 
     with mlflow.start_run(run_id=run_id):
-    
         # Generate model predictions
         y_pred_proba = model.predict(X)
         y_pred = np.argmax(y_pred_proba, axis=1)
@@ -92,7 +87,7 @@ def evaluate_model(
         with open(evaluation_path, "w") as f:
             json.dump(evaluation, f, indent=2)
 
-        # Log metrics (MLFLOW)
+        # Log metrics (MLflow)
         mlflow.log_metrics(
             {
                 "test_accuracy": report["accuracy"],

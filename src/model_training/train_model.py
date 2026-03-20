@@ -130,11 +130,15 @@ def train_model(train_data: pd.DataFrame, params: dict[str, int | float]) -> Non
         train_data (pd.DataFrame): Training dataset.
         params (dict[str, int | float]): Model hyperparameters.
     """
-    mlflow.set_experiment("model_training")
+    # Set up MLflow experiment
+    mlflow.set_experiment("ml_classification")
+
     mlflow.keras.autolog()  # Automatically log Keras metrics and artifacts
+    
     with mlflow.start_run():
         tf.keras.utils.set_random_seed(params.pop("random_seed"))
 
+        # Log preprocessing artifacts
         mlflow.log_artifact("artifacts/[features]_mean_imputer.joblib")
         mlflow.log_artifact("artifacts/[features]_scaler.joblib")
 
@@ -165,6 +169,7 @@ def train_model(train_data: pd.DataFrame, params: dict[str, int | float]) -> Non
 
         save_training_artifacts(model, encoder)
 
+        # Log the encoder
         mlflow.log_artifact("artifacts/[target]_one_hot_encoder.joblib")
 
         
