@@ -157,6 +157,9 @@ def train_model(train_data: pd.DataFrame, params: dict[str, int | float]) -> Non
         }
 
     with mlflow.start_run(**extra_args):
+
+        mlflow.log_params(params)
+
         tf.keras.utils.set_random_seed(params.pop("random_seed"))
 
         # Log preprocessing artifacts
