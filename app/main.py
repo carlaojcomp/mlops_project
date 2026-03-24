@@ -7,7 +7,7 @@ import pandas as pd
 from flask import Flask, render_template, request
 from sklearn.datasets import load_breast_cancer
 from tensorflow.keras.models import load_model
-from mlflow.tracking import MLflowClient
+from mlflow.tracking import MlflowClient
 
 logger = logging.getLogger("app.main")
 
